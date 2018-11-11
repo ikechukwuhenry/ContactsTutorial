@@ -15,6 +15,8 @@
 		AF848E5521988610007D850B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF848E5321988610007D850B /* LaunchScreen.storyboard */; };
 		AF848E6021988610007D850B /* ContactsTutorialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF848E5F21988610007D850B /* ContactsTutorialTests.swift */; };
 		AF848E6B21988610007D850B /* ContactsTutorialUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF848E6A21988610007D850B /* ContactsTutorialUITests.swift */; };
+		AF848E792198863D007D850B /* ExpandableNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF848E782198863D007D850B /* ExpandableNames.swift */; };
+		AF848E7B21988646007D850B /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF848E7A21988646007D850B /* ContactCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		AF848E6621988610007D850B /* ContactsTutorialUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContactsTutorialUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF848E6A21988610007D850B /* ContactsTutorialUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTutorialUITests.swift; sourceTree = "<group>"; };
 		AF848E6C21988610007D850B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF848E782198863D007D850B /* ExpandableNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExpandableNames.swift; path = ../../Contacts/Contact/ExpandableNames.swift; sourceTree = "<group>"; };
+		AF848E7A21988646007D850B /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				AF848E472198860F007D850B /* AppDelegate.swift */,
+				AF848E782198863D007D850B /* ExpandableNames.swift */,
+				AF848E7A21988646007D850B /* ContactCell.swift */,
 				AF848E492198860F007D850B /* ViewController.swift */,
 				AF848E4B2198860F007D850B /* Main.storyboard */,
 				AF848E5121988610007D850B /* Assets.xcassets */,
@@ -259,6 +265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF848E7B21988646007D850B /* ContactCell.swift in Sources */,
+				AF848E792198863D007D850B /* ExpandableNames.swift in Sources */,
 				AF848E4A2198860F007D850B /* ViewController.swift in Sources */,
 				AF848E482198860F007D850B /* AppDelegate.swift in Sources */,
 				AF848E502198860F007D850B /* ContactsTutorial.xcdatamodeld in Sources */,
