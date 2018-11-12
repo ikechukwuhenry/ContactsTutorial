@@ -15,8 +15,8 @@ class ViewController: UITableViewController {
     let namesOfCEO = ["Steve", "Jack", "Ben", "Gray", "Moses", "Heth", "Zophar", "Machpelah"]
     let otherNames = ["Kelechi", "Tochukwu", "Eze igbo", "Benson", "Moses", "Caleb", "Macron", "Swift"]
     //    var twoDArrays = [ ExpandaleNames(isExpanded: true, names: ["Steve", "Jack", "Ben", "Gray", "Moses", "Heth", "Zophar", "Machpelah"]), ExpandaleNames(isExpanded: true, names: ["Kelechi", "Tochukwu", "Eze igbo", "Benson", "Moses", "Caleb", "Macron", "Swift"])
-    var twoDArrays = [ExpandaleNames(isExpanded: true, names: ["Steve", "Jack", "Ben", "Gray", "Moses", "Heth", "Zophar", "Machpelah"].map{FavoritableContact(name: $0, isFavorite: false)}), ExpandaleNames(isExpanded: true, names: ["Kelechi", "Tochukwu", "Eze igbo", "Benson", "Moses", "Caleb", "Macron", "Swift"].map{FavoritableContact(name: $0, isFavorite: false)})]
-    
+//    var twoDArrays = [ExpandaleNames(isExpanded: true, names: ["Steve", "Jack", "Ben", "Gray", "Moses", "Heth", "Zophar", "Machpelah"].map{FavoritableContact(name: $0, isFavorite: false)}), ExpandaleNames(isExpanded: true, names: ["Kelechi", "Tochukwu", "Eze igbo", "Benson", "Moses", "Caleb", "Macron", "Swift"].map{FavoritableContact(name: $0, isFavorite: false)})]
+    var twoDArrays = [ExpandaleNames]()
     var showIndexPaths = false
     
     
@@ -28,7 +28,7 @@ class ViewController: UITableViewController {
         navigationItem.title = "Contacts"
         
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Show Indexpatg", style: .plain, target: self, action: #selector(handleShowIndexPath))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Show Indexpath", style: .plain, target: self, action: #selector(handleShowIndexPath))
         tableView.register(ContactCell.self, forCellReuseIdentifier: cellId)
     }
     
@@ -62,12 +62,14 @@ class ViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ContactCell
         cell.link = self
         // let name = indexPath.section == 0 ? names[indexPath.row] : otherNames[indexPath.row]
-        let contact = twoDArrays[indexPath.section].names[indexPath.row]
-        cell.textLabel?.text = contact.name
+        let myContact = twoDArrays[indexPath.section].names[indexPath.row]
+        cell.textLabel?.text = myContact.contact.givenName + " " + myContact.contact.familyName
+        cell.detailTextLabel?.text = myContact.contact.phoneNumbers.first?.value.stringValue
         if showIndexPaths {
-            cell.textLabel?.text = "\(contact.name) Section:\(indexPath.section) Row:\(indexPath.row)"
+//            cell.textLabel?.text = "\(contact.name) Section:\(indexPath.section) Row:\(indexPath.row)"
+             cell.textLabel?.text = myContact.contact.givenName + " " + myContact.contact.familyName
         }
-        cell.accessoryView?.tintColor = contact.isFavorite ? .red : .lightGray
+        cell.accessoryView?.tintColor = myContact.isFavorite ? .red : .lightGray
         return cell
         
     }
@@ -123,7 +125,7 @@ class ViewController: UITableViewController {
         let favorited = contact.isFavorite
         
         twoDArrays[indexPathTapped!.section].names[indexPathTapped!.row].isFavorite = !favorited
-        print(contact.name)
+        //print(contact.)
         tableView.reloadRows(at: [indexPathTapped!], with: .fade)
     }
     
@@ -138,6 +140,26 @@ class ViewController: UITableViewController {
             }
             if granted {
                 print("access granted ..")
+                let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
+                
+                let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
+                do {
+                    var favoratableContacts = [FavoritableContact]()
+                    
+                    try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointerIfYouWantToStopEnumerating) in
+                        print(contact.givenName)
+                        favoratableContacts.append(FavoritableContact(contact: contact, isFavorite: false))
+//                        favoratableContacts.append(FavoritableContact(name: contact.givenName + " " + contact.familyName, isFavorite: false))
+                    })
+                    let names = ExpandaleNames(isExpanded: true, names: favoratableContacts)
+                    self.twoDArrays = [names]
+                    print("new two d arrays")
+                    
+                }catch let err {
+                    print("failed to enumerate contact", err)
+                }
+             
+                
             }else {
                 print("acces denied")
             }
